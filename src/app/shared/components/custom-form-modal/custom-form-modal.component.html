@@ -1,0 +1,137 @@
+<div class="custom-modal">
+  <h2 class="modal-title" [class.rtl-title]="document.dir === 'rtl'">
+    {{ data.title | translate }}
+  </h2>
+
+  <form [formGroup]="data.formGroup" class="modal-form">
+    <div class="form-grid">
+      <!-- General Fields -->
+      <ng-container *ngFor="let field of data.fields">
+        <ng-container
+          *ngIf="field.controlName !== 'startDate' && field.controlName !== 'endDate'"
+        >
+          <mat-form-field
+            appearance="outline"
+            class="input-field full-width"
+            [floatLabel]="'always'"
+          >
+            <mat-label [attr.dir]="field.direction">{{
+              field.label | translate
+            }}</mat-label>
+            <mat-icon matPrefix *ngIf="field.icon">{{ field.icon }}</mat-icon>
+
+            <!-- Text / Number -->
+            <input
+              *ngIf="!field.type || field.type === 'text' || field.type === 'number' || field.type === 'date'"
+              matInput
+              [formControlName]="field.controlName"
+              [type]="field.type || 'text'"
+              [dir]="field.direction || 'ltr'"
+              [attr.maxLength]="field.maxLength || null"
+              [attr.placeholder]="field.placeholder ? (field.placeholder | translate) : null"
+              [attr.autofocus]="field.autofocus ? true : null"
+            />
+
+            <!-- Textarea -->
+            <textarea
+              *ngIf="field.type === 'textarea'"
+              matInput
+              [formControlName]="field.controlName"
+              [rows]="field.rows || 3"
+              [dir]="field.direction || 'ltr'"
+              [attr.maxLength]="field.maxLength || null"
+              [attr.placeholder]="field.placeholder ? (field.placeholder | translate) : null"
+            ></textarea>
+
+            <!-- Select -->
+            <mat-select *ngIf="field.type === 'select'" [formControlName]="field.controlName">
+              <mat-option disabled>
+                <ngx-mat-select-search
+                  [formControl]="field.searchControl!"
+                  placeholderLabel="بحث..."
+                  noEntriesFoundLabel="لا توجد نتائج"
+                ></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let option of field.filteredOptions" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+
+            <!-- Checkbox -->
+            <mat-checkbox *ngIf="field.type === 'checkbox'" [formControlName]="field.controlName">
+              {{ field.label | translate }}
+            </mat-checkbox>
+
+            <!-- Errors -->
+            <mat-error *ngIf="data.formGroup.get(field.controlName)?.hasError('required')">
+              {{ "validation.required" | translate }}
+            </mat-error>
+            <mat-error *ngIf="data.formGroup.get(field.controlName)?.hasError('pattern')">
+              {{ "validation.pattern" | translate }}
+            </mat-error>
+            <mat-error *ngIf="data.formGroup.get(field.controlName)?.hasError('min')">
+              {{ "validation.min" | translate }}
+            </mat-error>
+            <mat-error *ngIf="data.formGroup.get(field.controlName)?.hasError('max')">
+              {{ "validation.max" | translate }}
+            </mat-error>
+          </mat-form-field>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <!-- Date Fields Row (shown only if both exist) -->
+    <div class="form-grid form-grid--two-columns" *ngIf="hasDateFields()">
+      <!-- Start Date -->
+      <mat-form-field appearance="outline" class="input-field">
+        <mat-label>{{ "tariffs.startDate" | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="startDate"
+          flatpickr
+          mwlFlatpickr
+          [altInput]="true"
+          [altFormat]="'F j, Y'"
+          [dateFormat]="'Y-m-d'"
+          class="flatpickr-input"
+          placeholder="Select date"
+        />
+      </mat-form-field>
+
+      <!-- End Date -->
+      <mat-form-field appearance="outline" class="input-field">
+        <mat-label>{{ "tariffs.endDate" | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="endDate"
+          flatpickr
+          mwlFlatpickr
+          [altInput]="true"
+          [altFormat]="'F j, Y'"
+          [dateFormat]="'Y-m-d'"
+          class="flatpickr-input"
+          placeholder="Select date"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Actions -->
+    <div class="modal-actions">
+      <button mat-stroked-button color="warn" type="button" (click)="close()">
+        {{ data.cancelLabel ? (data.cancelLabel | translate) : ("buttons.cancel" | translate) }}
+      </button>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        [disabled]="data.formGroup.invalid"
+        (click)="submit()"
+      >
+        {{ data.submitLabel ? (data.submitLabel | translate) : ("buttons.save" | translate) }}
+      </button>
+    </div>
+  </form>
+</div>

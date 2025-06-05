@@ -1,0 +1,10 @@
+<div class="outer-container">
+  <app-header (menuToggle)="toggleSidebar()"></app-header>
+
+  <div class="main-content">
+    <app-sidebar *ngIf="isSidebarOpen || isDesktop"></app-sidebar>
+    <div class="router-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

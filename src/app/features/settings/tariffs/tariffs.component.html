@@ -1,0 +1,25 @@
+
+<h2>{{ 'generalStatuses.title' | translate }}</h2>
+<div class="status-container">
+  <div class="header-row">
+    <div class="view-toggle">
+      <button mat-button (click)="viewMode = 'table'" [color]="viewMode === 'table' ? 'primary' : ''">
+        <mat-icon>table_view</mat-icon> Table
+      </button>
+      <button mat-button (click)="viewMode = 'grid'" [color]="viewMode === 'grid' ? 'primary' : ''">
+        <mat-icon>view_module</mat-icon> Grid
+      </button>
+    </div>
+
+    <button class="add-btn" (click)="onAdd()">➕ {{ 'buttons.add' | translate }}</button>
+  </div>
+
+
+ <app-data-table
+ *ngIf="viewMode === 'table'"
+ [columns]="columns"
+ [dataSource]="tariffs"
+ [actions]="true"
+ (edit)="onEdit($event)"
+ (delete)="onDelete($event)">
+</app-data-table>

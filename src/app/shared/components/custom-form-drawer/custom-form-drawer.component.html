@@ -1,0 +1,66 @@
+<div class="drawer-container">
+  <h2 class="drawer-title" [class.rtl-title]="isRtl()">{{ title | translate }}</h2>
+
+  <form [formGroup]="formGroup" class="drawer-form">
+    <div class="form-grid">
+      <ng-container *ngFor="let field of fields">
+        <mat-form-field appearance="outline" class="input-field" [floatLabel]="'always'">
+          <mat-label [attr.dir]="field.direction">{{ field.label | translate }}</mat-label>
+
+          <!-- Text / Number -->
+          <input *ngIf="!field.type || field.type === 'text' || field.type === 'number'"
+                 matInput [formControlName]="field.controlName"
+                 [type]="field.type || 'text'"
+                 [attr.maxLength]="field.maxLength"
+                 [attr.placeholder]="field.placeholder ? (field.placeholder | translate) : null"
+                 [attr.dir]="field.direction || 'ltr'" />
+
+          <!-- Textarea -->
+          <textarea *ngIf="field.type === 'textarea'" matInput
+                    [formControlName]="field.controlName"
+                    [rows]="field.rows || 3"
+                    [attr.maxLength]="field.maxLength"
+                    [attr.dir]="field.direction || 'ltr'"></textarea>
+
+          <!-- Select -->
+          <mat-select *ngIf="field.type === 'select'" [formControlName]="field.controlName">
+            <mat-option disabled>
+              <ngx-mat-select-search [formControl]="field.searchControl!"
+                                     placeholderLabel="بحث..."
+                                     noEntriesFoundLabel="لا توجد نتائج">
+              </ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let option of field.filteredOptions" [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+
+          <!-- Checkbox -->
+          <mat-checkbox *ngIf="field.type === 'checkbox'" [formControlName]="field.controlName">
+            {{ field.label | translate }}
+          </mat-checkbox>
+
+          <!-- Date -->
+          <input *ngIf="field.type === 'date'" matInput [formControlName]="field.controlName"
+                 mwlFlatpickr flatpickr class="flatpickr-input" />
+
+          <!-- Errors -->
+          <mat-error *ngIf="formGroup.get(field.controlName)?.hasError('required')">
+            {{ 'validation.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+    </div>
+
+    <div class="drawer-actions">
+      <button mat-stroked-button color="warn" type="button" (click)="onCancel()">
+        {{ cancelLabel | translate }}
+      </button>
+
+      <button mat-flat-button color="primary" type="button" [disabled]="formGroup.invalid"
+              (click)="onSubmit()">
+        {{ submitLabel | translate }}
+      </button>
+    </div>
+  </form>
+</div>

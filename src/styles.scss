@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'styles/_grid-cards' as *;
+@use './styles/table-view';
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+
+/* Apply Cairo to all normal text elements */
+body, html, .mat-typography, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, div,table,
+table th,
+table td,
+.mat-header-cell,
+.mat-cell,
+.mat-row,
+.mat-header-row,.mat-dialog-container,
+.mat-dialog-container,
+.mat-dialog-title,
+.mat-form-field,
+.mat-form-field label,
+.mat-form-field-infix,
+.mat-form-field-label,
+.mat-form-field-wrapper,
+.mat-hint,
+.mat-button-wrapper {
+  font-family: 'Cairo', sans-serif !important;;
+}
+
+
+.custom-modal,
+.custom-modal * {
+  font-family: 'Cairo', sans-serif !important;
+}
+
+
+/* EXCLUDE Material icons */
+.mat-icon,
+.material-icons,
+.fa, [class^="fa-"], [class*=" fa-"] {
+  font-family: 'Material Icons' !important;
+}
+
+
+html,
+body,
+app-root {
+  height: 100%;
+  margin: 0;
+}
+
+
+html[dir="rtl"] body,
+body[dir='rtl'] {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Cairo', sans-serif;
+}
+
+html[dir="ltr"] body,
+body[dir='ltr'] {
+  direction: ltr;
+  text-align: left;
+  font-family: 'Roboto', sans-serif;
+}

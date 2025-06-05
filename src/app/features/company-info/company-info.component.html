@@ -1,0 +1,48 @@
+<mat-card class="company-info-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>domain</mat-icon> {{ 'Company Information' | translate }}
+    </mat-card-title>
+    <mat-card-subtitle>{{ 'معلومات الشركة' }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    <div class="info-field">
+      <mat-icon>badge</mat-icon>
+      <span>Name (EN):</span>
+      <strong>{{ companyInfo.nameEn || '-' }}</strong>
+    </div>
+
+    <div class="info-field">
+      <mat-icon>translate</mat-icon>
+      <span>Name (AR):</span>
+      <strong>{{ companyInfo.nameAr || '-' }}</strong>
+    </div>
+
+    <div class="info-field">
+      <mat-icon>place</mat-icon>
+      <span>Address:</span>
+      <strong>{{ companyInfo.address || '-' }}</strong>
+    </div>
+
+    <div class="info-field">
+      <mat-icon>call</mat-icon>
+      <span>Phone:</span>
+      <strong>{{ companyInfo.phone || '-' }}</strong>
+    </div>
+
+    <div class="info-field">
+      <mat-icon>language</mat-icon>
+      <span>Logo URL:</span>
+      <strong>{{ companyInfo.logoUrl || '-' }}</strong>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" (click)="onEdit()">
+      ✏️ {{ 'Edit' | translate }}
+    </button>
+  </mat-card-actions>
+</mat-card>

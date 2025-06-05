@@ -1,0 +1,25 @@
+<div class="settings-container">
+  <h2>Settings</h2>
+
+  <label>Filter by Building:</label>
+  <select [(ngModel)]="selectedBuildingId" (change)="loadSettings()">
+    <option *ngFor="let b of buildings" [value]="b.id">{{ b.name }}</option>
+  </select>
+
+  <button (click)="onAdd()">➕ Add Setting</button>
+
+  <app-data-table
+    [data]="settings"
+    [columns]="['key', 'value', 'description']"
+    [actions]="true"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)"
+  ></app-data-table>
+
+  <app-custom-form-modal
+    [title]="modalTitle"
+    [fields]="fields"
+    [(formData)]="formData"
+    (submit)="onSubmit()"
+  ></app-custom-form-modal>
+</div>

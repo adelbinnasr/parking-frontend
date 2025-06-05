@@ -1,0 +1,201 @@
+<div class="subscriber-container" *ngIf="!isLoading">
+  <!-- 🔍 Search & Filter -->
+  <div class="filters">
+    <mat-form-field appearance="outline" class="search-box">
+      <mat-label>{{ 'individualSubscriber.search' | translate }}</mat-label>
+      <input matInput [(ngModel)]="searchText" (keyup.enter)="onSearch()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'individualSubscriber.from' | translate }}</mat-label>
+      <input matInput [matDatepicker]="fromPicker" [(ngModel)]="fromDate" />
+      <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'individualSubscriber.to' | translate }}</mat-label>
+      <input matInput [matDatepicker]="toPicker" [(ngModel)]="toDate" />
+      <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+      <mat-datepicker #toPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <!-- ❌ Not Found -->
+  <div *ngIf="selectedSubscriber == null && searchText" class="no-results">
+    <p>{{ 'individualSubscriber.noMatch' | translate }}</p>
+  </div>
+
+  <!-- ✅ Subscriber Details + Stats -->
+  <div *ngIf="selectedSubscriber" class="subscriber-layout">
+    <!-- 🔹 Info Card -->
+    <div class="subscriber-card">
+      <div class="subscriber-labels">
+        <div class="label">{{ 'individualSubscriber.name' | translate }}:</div>
+        <div class="label">{{ 'individualSubscriber.cardId' | translate }}:</div>
+        <div class="label">{{ 'individualSubscriber.flatNo' | translate }}:</div>
+        <div class="label">{{ 'individualSubscriber.freeHours' | translate }}:</div>
+        <div class="label">{{ 'individualSubscriber.extraHourFee' | translate }}:</div>
+        <div class="label">{{ 'individualSubscriber.status' | translate }}:</div>
+      </div>
+      <div class="subscriber-values" [dir]="isRtl() ? 'rtl' : 'ltr'">
+        <div class="value">{{ selectedSubscriber.name || '-' }}</div>
+        <div class="value">{{ selectedSubscriber.cardSerialNumber || '-' }}</div>
+        <div class="value">{{ selectedSubscriber.flatNumber || '-' }}</div>
+        <div class="value">{{ selectedSubscriber.freeHours || 0 }}</div>
+        <div class="value">{{ selectedSubscriber.extraHourFee || 0 }}</div>
+        <div class="value">{{ selectedSubscriber.status || '-' }}</div>
+      </div>
+    </div>
+
+    <!-- 🔹 Stats -->
+    <div class="subscriber-stats">
+      <div class="stat-box" *ngFor="let stat of stats">
+        <div class="stat-value">{{ stat.value }}</div>
+        <div class="stat-label">{{ stat.label | translate }}</div>
+      </div>
+    </div>
+
+    <!-- 📊 Transactions Table -->
+    <div *ngIf="selectedSubscriber.transactions?.length">
+      <div class="transactions-header">
+        <h3>{{ 'individualSubscriber.transactions' | translate }}:</h3>
+        <div class="actions">
+          <button mat-button color="primary" (click)="exportToExcel()">
+            📥 {{ 'individualSubscriber.excel' | translate }}
+          </button>
+          <button mat-button color="accent" (click)="print()">
+            🖨️ {{ 'individualSubscriber.print' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <table class="transaction-table">
+        <thead>
+          <tr>
+            <th>{{ 'individualSubscriber.table.no' | translate }}</th>
+            <th>{{ 'individualSubscriber.table.cardId' | translate }}</th>
+            <th>{{ 'individualSubscriber.table.plateCode' | translate }}</th>
+            <th>{{ 'individualSubscriber.table.in' | translate }}</th>
+            <th>{{ 'individualSubscriber.table.out' | translate }}</th>
+            <th>{{ 'individualSubscriber.table.usedHours' | translate }}</th>
+            <th>{{ 'individualSubscriber.table.notes' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tx of selectedSubscriber.transactions; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ tx.cardSerialNumber }}</td>
+            <td>{{ tx.plateCode || '-' }}</td>
+            <td>{{ tx.inTime | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td>{{ tx.outTime | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td>{{ tx.freeHoursUsed }}</td>
+              <td class="notes-cell">
+  {{ getNoteTranslation(tx.notes) }}
+</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 📌 Breakdown -->
+    <div class="breakdown-box">
+      <h4>{{ 'individualSubscriber.breakdown' | translate }}</h4>
+
+      <div class="breakdown-row">
+        <span class="label">{{ 'individualSubscriber.totalHours' | translate }}:</span>
+        <span class="value">{{ breakdown.allowed }} hour</span>
+      </div>
+
+      <div class="breakdown-row">
+        <span class="label">{{ 'individualSubscriber.hoursUsed' | translate }}:</span>
+        <span class="value">{{ breakdown.used }} hour</span>
+      </div>
+
+      <div class="breakdown-row">
+        <span class="label">{{ 'individualSubscriber.hoursRemaining' | translate }}:</span>
+        <span class="value" [ngClass]="{ negative: breakdown.remaining < 0 }">
+          {{ breakdown.remaining }} hour
+        </span>
+      </div>
+
+      <hr />
+
+      <div class="breakdown-row">
+        <span class="label">{{ 'individualSubscriber.extraHours' | translate }}:</span>
+        <span class="value">{{ breakdown.extra }} hour</span>
+      </div>
+
+      <div class="breakdown-row">
+        <span class="label">{{ 'individualSubscriber.pricePerHour' | translate }}:</span>
+        <span class="value">{{ breakdown.extraPrice }} SR</span>
+      </div>
+
+      <div class="breakdown-row total">
+        <span class="label">{{ 'individualSubscriber.totalToPay' | translate }}:</span>
+        <span class="value" [ngClass]="{ highlight: breakdown.toPay > 0 }">
+          {{ breakdown.toPay }} SR
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 🔧 PRINT-ONLY VERSION -->
+<!-- ✅ Clean Printable Report Container -->
+<div id="print-area" class="print-container" style="display: none;">
+  <div style="text-align:center; margin-bottom: 16px;">
+<img *ngIf="companyInfo?.logoUrl" [src]="companyInfo?.logoUrl" alt="Logo" style="height: 50px;" />
+    <h2>{{ companyInfo?.nameEn || '-' }}</h2>
+    <h4>{{ companyInfo?.nameAr || '-' }}</h4>
+    <p>{{ companyInfo?.address }}</p>
+    <p><strong>📞</strong> {{ companyInfo?.phone }}</p>
+    <hr />
+  </div>
+<div *ngIf="selectedSubscriber">
+  <h3 style="text-align:center;">Subscriber Report</h3>
+  <p><strong>Name:</strong> {{ selectedSubscriber.name }}</p>
+  <p><strong>Card ID:</strong> {{ selectedSubscriber.cardSerialNumber }}</p>
+  <p><strong>Flat No:</strong> {{ selectedSubscriber.flatNumber || '-' }}</p>
+  <p><strong>Status:</strong> {{ selectedSubscriber.status }}</p>
+  <p><strong>Extra Hour Fee:</strong> {{ selectedSubscriber.extraHourFee }} SR</p>
+
+  <h4>Statistics</h4>
+  <ul>
+    <li>Allowed Hours: {{ selectedSubscriber.allowedHours }}</li>
+    <li>Used Hours: {{ selectedSubscriber.usedHours }}</li>
+    <li>Remaining Hours: {{ selectedSubscriber.remainingHours }}</li>
+    <li>Extra Hours: {{ selectedSubscriber.extraHours }}</li>
+    <li>Total To Pay: {{ selectedSubscriber.toPay }} SR</li>
+  </ul>
+</div>
+  <h4>Transactions</h4>
+  <table style="width:100%; border-collapse: collapse;" border="1">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>In</th>
+        <th>Out</th>
+        <th>Free Hours</th>
+        <th>Paid Hours</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <div *ngIf="selectedSubscriber">
+
+      <tr *ngFor="let tx of selectedSubscriber.transactions; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ tx.inTime | date: 'dd.MM.yyyy HH:mm' }}</td>
+        <td>{{ tx.outTime | date: 'dd.MM.yyyy HH:mm' }}</td>
+        <td>{{ tx.freeHoursUsed }}</td>
+        <td>{{ tx.paidHours }}</td>
+        <td>{{ tx.notes || '-' }}</td>
+      </tr>
+      </div>
+    </tbody>
+  </table>
+</div>
+

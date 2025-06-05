@@ -1,0 +1,119 @@
+
+<!-- ====================================== -->
+<!-- <div class="status-container">
+  <div class="header-row">
+    <div class="view-toggle">
+      <button mat-button (click)="viewMode = 'table'" [color]="viewMode === 'table' ? 'primary' : ''">
+        <mat-icon>table_view</mat-icon> Table
+      </button>
+      <button mat-button (click)="viewMode = 'grid'" [color]="viewMode === 'grid' ? 'primary' : ''">
+        <mat-icon>view_module</mat-icon> Grid
+      </button>
+    </div>
+
+    <button class="add-btn" (click)="onAdd()">➕ {{ 'buttons.add' | translate }}</button>
+  </div>
+
+
+  <div *ngIf="viewMode === 'grid'" class="status-grid">
+    <div class="status-card" *ngFor="let status of statuses">
+      <div class="status-info">
+        <div class="status-id">#{{ status.id }}</div>
+        <div class="status-names">
+          <div class="status-en"><strong>EN:</strong> {{ status.statusNameEn }}</div>
+          <div class="status-ar"><strong>AR:</strong> {{ status.statusNameAr }}</div>
+        </div>
+      </div>
+      <div class="status-actions">
+        <button class="edit-btn" (click)="onEdit(status)">✏️</button>
+        <button class="delete-btn" (click)="onDelete(status)">🗑️</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="viewMode === 'table'" class="table-wrapper table-global">
+    <table mat-table [dataSource]="statuses" class="mat-elevation-z1 full-width">
+
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let status">{{ status.id }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="statusNameEn">
+        <th mat-header-cell *matHeaderCellDef>{{ 'generalStatuses.nameEn' | translate }}</th>
+        <td mat-cell *matCellDef="let status">{{ status.statusNameEn }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="statusNameAr">
+        <th mat-header-cell *matHeaderCellDef>{{ 'generalStatuses.nameAr' | translate }}</th>
+        <td mat-cell *matCellDef="let status">{{ status.statusNameAr }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'shared.actions' | translate }}</th>
+        <td mat-cell *matCellDef="let status" class="actions-cell">
+          <div class="action-buttons">
+            <button mat-icon-button color="primary" (click)="onEdit(status)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(status)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="['id', 'statusNameEn', 'statusNameAr', 'actions']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['id', 'statusNameEn', 'statusNameAr', 'actions'];"></tr>
+    </table>
+  </div>
+</div> -->
+
+<h2>{{ 'generalStatuses.title' | translate }}</h2>
+<div class="status-container">
+  <div class="header-row">
+    <div class="view-toggle">
+      <button mat-button (click)="viewMode = 'table'" [color]="viewMode === 'table' ? 'primary' : ''">
+        <mat-icon>table_view</mat-icon> Table
+      </button>
+      <button mat-button (click)="viewMode = 'grid'" [color]="viewMode === 'grid' ? 'primary' : ''">
+        <mat-icon>view_module</mat-icon> Grid
+      </button>
+    </div>
+
+    <button class="add-btn" (click)="onAdd()">➕ {{ 'buttons.add' | translate }}</button>
+  </div>
+
+  <!-- Grid View -->
+  <div *ngIf="viewMode === 'grid'" class="status-grid">
+    <div class="status-card" *ngFor="let status of statuses">
+      <div class="status-info">
+        <div class="status-id">#{{ status.id }}</div>
+        <div class="status-names">
+          <div class="status-en"><strong>EN:</strong> {{ status.statusNameEn }}</div>
+          <div class="status-ar"><strong>AR:</strong> {{ status.statusNameAr }}</div>
+        </div>
+      </div>
+      <div class="status-actions">
+        <button class="edit-btn" (click)="onEdit(status)">✏️</button>
+        <button class="delete-btn" (click)="onDelete(status)">🗑️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table View with reusable component -->
+  <app-data-table
+    *ngIf="viewMode === 'table'"
+    [columns]="columns"
+    [dataSource]="statuses"
+    [actions]="true"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)">
+  </app-data-table>
+</div>

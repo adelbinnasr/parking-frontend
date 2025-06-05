@@ -1,0 +1,35 @@
+<div class="header-container">
+  <div class="date-time-row">
+    <button class="menu-icon" (click)="toggleSidebar()" *ngIf="isMobile">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+
+    <span>📅 {{ gregorianDate }}</span>
+    <div class="divider">|</div>
+    <span>🕌 {{ hijriDate }}</span>
+    <div class="divider">|</div>
+    <span>⏰ {{ currentTime }}</span>
+    <div class="divider">|</div>
+    <span>💰 {{ 'header.hourPrice' | translate:{ price: 25 } }}</span>
+    <div class="divider">|</div>
+    <input type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls" hidden #fileInput />
+    <button class="upload-btn" (click)="fileInput.click()">Upload Data</button>
+    <div class="divider">|</div>
+    <marquee direction="left" class="announcement-bar">
+      🚗🚗 {{ announcement }}
+    </marquee>
+
+    <div class="divider">|</div>
+
+    <div class="language-toggle">
+      <mat-icon>language</mat-icon>
+      <select (change)="onLangChange($event)" [value]="currentLang">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+      </select>
+    </div>
+  </div>
+
+
+</div>

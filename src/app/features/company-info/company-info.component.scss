@@ -1,0 +1,26 @@
+.company-info-card {
+  max-width: 600px;
+  margin: 2rem auto;
+
+  .info-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0;
+    font-size: 16px;
+
+    mat-icon {
+      font-size: 20px;
+      color: #616161;
+    }
+
+    span {
+      min-width: 130px;
+      color: #555;
+    }
+
+    strong {
+      color: #000;
+    }
+  }
+}

@@ -1,0 +1,91 @@
+.header-container {
+  background-color: #0e6b6b;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.date-time-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  gap: 0.8rem;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .divider {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #ccc;
+  }
+
+  marquee.announcement-bar {
+    flex-grow: 1;
+    color: #ccc;
+    font-style: italic;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-left: 1rem;
+  }
+
+  .upload-btn {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 0.3rem 1rem;         // increase horizontal padding
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;         // ⬅️ this forces it to stay in one line
+    line-height: 1.5;            // optional: makes text vertically centered
+    font-size: 0.9rem;
+
+    &:hover {
+      background-color: darkred;
+    }
+
+  }
+
+  .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #eeeeee;
+    border-radius: 5px;
+    padding: 2px 8px;
+    height: 32px;
+
+    mat-icon {
+      font-size: 20px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    select {
+      border: none;
+      background: transparent;
+      font-weight: bold;
+      font-size: 14px;
+      direction: ltr;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+    }
+  }
+
+
+
+}
+
+

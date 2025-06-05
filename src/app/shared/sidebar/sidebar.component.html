@@ -1,0 +1,123 @@
+<mat-nav-list class="sidebar-container">
+
+  <!-- 🟢 Dashboard -->
+  <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+    <mat-icon>dashboard</mat-icon>
+    <span>{{ 'menu.dashboard' | translate }}</span>
+  </a>
+
+  <mat-divider></mat-divider>
+
+  <!-- 🅿️ Parking Section -->
+  <mat-expansion-panel class="sidebar-panel" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>local_parking</mat-icon>
+        <span>{{ 'menu.parking' | translate }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- Static menu item -->
+    <a mat-list-item routerLink="/parking/areas" routerLinkActive="active-link">
+      <mat-icon>map</mat-icon>
+      <span>{{ 'menu.parkingAreas' | translate }}</span>
+    </a>
+
+    <!-- Dynamic Subscriber Types -->
+    <ng-container *ngFor="let type of subscriberTypes">
+      <a mat-list-item [routerLink]="['/subscribers', type.id]" routerLinkActive="active-link">
+        <mat-icon>person</mat-icon>
+        <span>{{ getTypeName(type) }}</span>
+        <span *ngIf="type.activeCount > 0" class="badge">{{ type.activeCount }}</span>
+      </a>
+    </ng-container>
+  </mat-expansion-panel>
+
+  <!-- 📊 Reports -->
+  <mat-expansion-panel class="sidebar-panel" [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>analytics</mat-icon>
+        <span>{{ 'menu.reports' | translate }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- Individual subscriber report -->
+    <a mat-list-item routerLink="/reports/subscriber" routerLinkActive="active-link">
+      <mat-icon>person_search</mat-icon>
+      <span>{{ 'menu.individualReport' | translate }}</span>
+    </a>
+
+    <!-- Summary report -->
+    <a mat-list-item routerLink="/reports/subscribers-summary" routerLinkActive="active-link">
+      <mat-icon>summarize</mat-icon>
+      <span>{{ 'menu.summaryReport' | translate }}</span>
+    </a>
+  </mat-expansion-panel>
+
+  <!-- 👥 Subscriber Management -->
+  <mat-expansion-panel class="sidebar-panel" [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>group</mat-icon>
+        <span>{{ 'menu.subscriberSettings' | translate }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <a mat-list-item routerLink="/subscribers/manage" routerLinkActive="active-link">
+      <mat-icon>manage_accounts</mat-icon>
+      <span>{{ 'menu.owners' | translate }}</span>
+    </a>
+
+    <a mat-list-item routerLink="/subscribers/cards" routerLinkActive="active-link">
+      <mat-icon>credit_card</mat-icon>
+      <span>{{ 'menu.cards' | translate }}</span>
+    </a>
+
+    <a mat-list-item routerLink="/settings/subscriber-types" routerLinkActive="active-link">
+      <mat-icon>category</mat-icon>
+      <span>{{ 'menu.subscriberTypes' | translate }}</span>
+    </a>
+  </mat-expansion-panel>
+
+  <!-- ⚙️ System Settings -->
+  <mat-expansion-panel class="sidebar-panel" [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>settings</mat-icon>
+        <span>{{ 'menu.settings' | translate }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <a mat-list-item routerLink="/company-info" routerLinkActive="active-link">
+      <mat-icon>business</mat-icon>
+      <span>{{ 'menu.companyInfo' | translate }}</span>
+    </a>
+
+    <a mat-list-item routerLink="/settings/general-statuses" routerLinkActive="active-link">
+      <mat-icon>toggle_on</mat-icon>
+      <span>{{ 'menu.generalStatuses' | translate }}</span>
+    </a>
+
+    <a mat-list-item routerLink="/settings/buildings" routerLinkActive="active-link">
+      <mat-icon>apartment</mat-icon>
+      <span>{{ 'menu.buildings' | translate }}</span>
+    </a>
+
+    <a mat-list-item routerLink="/settings/flats" routerLinkActive="active-link">
+      <mat-icon>domain</mat-icon>
+      <span>{{ 'menu.flats' | translate }}</span>
+    </a>
+
+    <a mat-list-item routerLink="/settings/tariffs" routerLinkActive="active-link">
+      <mat-icon>price_change</mat-icon>
+      <span>{{ 'menu.tariffs' | translate }}</span>
+    </a>
+
+    <a mat-list-item routerLink="/settings/plans" routerLinkActive="active-link">
+      <mat-icon>view_list</mat-icon>
+      <span>{{ 'menu.plans' | translate }}</span>
+    </a>
+  </mat-expansion-panel>
+
+</mat-nav-list>

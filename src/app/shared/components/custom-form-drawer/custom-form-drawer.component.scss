@@ -1,0 +1,50 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+/* Wrapper inside the drawer */
+.drawer-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 16px;
+  box-sizing: border-box;
+  max-height: 100%;
+}
+
+
+.drawer-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  flex-grow: 1;
+}
+
+@media (min-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.input-field {
+  width: 100%;
+}
+
+.drawer-actions {
+  margin-top: auto; // push actions to bottom
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #ccc;
+  background: #fff;
+}

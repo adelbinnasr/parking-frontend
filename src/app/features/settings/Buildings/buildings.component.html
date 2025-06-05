@@ -1,0 +1,48 @@
+<h2 class="section-title">{{ 'buildings.title' | translate }}</h2>
+
+<div class="header-row">
+  <div class="view-toggle">
+    <button mat-button (click)="viewMode = 'table'" [color]="viewMode === 'table' ? 'primary' : ''">
+      <mat-icon>table_view</mat-icon> Table
+    </button>
+    <button mat-button (click)="viewMode = 'grid'" [color]="viewMode === 'grid' ? 'primary' : ''">
+      <mat-icon>view_module</mat-icon> Grid
+    </button>
+  </div>
+
+  <button mat-flat-button color="primary" (click)="openModal('add')" class="add-btn">
+    <mat-icon>add</mat-icon>
+    {{ 'shared.add' | translate }}
+  </button>
+</div>
+
+<!-- Table View -->
+<app-data-table
+  *ngIf="viewMode === 'table'"
+  [columns]="columns"
+  [dataSource]="buildings"
+  [actions]="true"
+  (edit)="openModal('edit', $event)"
+  (delete)="onDelete($event.id)">
+</app-data-table>
+
+<!-- Grid View -->
+<div *ngIf="viewMode === 'grid'" class="status-container">
+  <div class="status-grid">
+    <div class="status-card" *ngFor="let b of buildings">
+      <div class="status-info">
+        <div class="status-id">#{{ b.id }}</div>
+        <div class="status-names">
+          <div class="status-en"><strong>EN:</strong> {{ b.nameEn }}</div>
+          <div class="status-ar"><strong>AR:</strong> {{ b.nameAr }}</div>
+          <div class="status-en"><strong>Location EN:</strong> {{ b.locationEn }}</div>
+          <div class="status-ar"><strong>Location AR:</strong> {{ b.locationAr }}</div>
+        </div>
+      </div>
+      <div class="status-actions">
+        <button class="edit-btn" (click)="openModal('edit', b)">✏️</button>
+        <button class="delete-btn" (click)="onDelete(b.id)">🗑️</button>
+      </div>
+    </div>
+  </div>
+</div>

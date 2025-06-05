@@ -1,0 +1,39 @@
+<!-- login.component.html -->
+<div class="login-wrapper">
+  <div class="login-left">
+    <div class="branding">
+      <img src="/assets/images/logo.png" alt="Logo" class="logo" />
+    </div>
+
+    <h2>{{ 'login.title' | translate }}</h2>
+    <p class="subtitle">{{ 'login.subtitle' | translate }}</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'login.username' | translate }}</mat-label>
+        <input matInput formControlName="username" />
+        <mat-error *ngIf="loginForm.get('username')?.invalid">{{ 'login.usernameRequired' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'login.password' | translate }}</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Toggle password visibility'" type="button">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.get('password')?.invalid">{{ 'login.passwordRequired' | translate }}</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="login-button" type="submit" [disabled]="loginForm.invalid">
+        {{ 'login.loginBtn' | translate }}
+      </button>
+    </form>
+
+    <!-- <div class="links">
+      <a href="#">{{ 'login.forgotPassword' | translate }}</a>
+      <a href="#">{{ 'login.register' | translate }}</a>
+    </div> -->
+  </div>
+
+  <div class="login-right"></div>
+</div>

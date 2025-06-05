@@ -1,0 +1,106 @@
+<!-- 🔍 Search + Actions -->
+<div class="toolbar">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>{{ 'subscriberSummary.searchPlaceholder' | translate }}</mat-label>
+  <input
+  matInput
+  [(ngModel)]="searchText"
+  [placeholder]="'subscriberSummary.searchPlaceholder' | translate"
+/>
+
+  </mat-form-field>
+
+  <div class="action-buttons no-print">
+    <button mat-raised-button color="primary" (click)="exportToExcel()">
+      <mat-icon>download</mat-icon>
+      {{ 'subscriberSummary.exportExcel' | translate }}
+    </button>
+    <button mat-raised-button color="accent" (click)="print()">
+      <mat-icon>print</mat-icon>
+      {{ 'subscriberSummary.print' | translate }}
+    </button>
+  </div>
+</div>
+
+<!-- 🔽 Filters Row -->
+<div class="filters-row">
+  <!-- 🔻 Plan Filter -->
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label>{{ 'subscriberSummary.filterByPlan' | translate }}</mat-label>
+    <mat-select [(value)]="selectedPlan">
+      <mat-option *ngFor="let plan of plans" [value]="plan.value">
+        {{ plan.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- ✅ Usage Filter -->
+  <mat-checkbox [(ngModel)]="showUsedOnly">
+    {{ 'subscriberSummary.showOnlyUsed' | translate }} ({{ filteredCount }})
+  </mat-checkbox>
+</div>
+
+<!-- 📊 Table Area -->
+<div class="printable-area">
+  <table mat-table [dataSource]="filteredSummary" class="mat-elevation-z2">
+
+    <!-- 🔸 Columns -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>{{ 'subscriberSummary.name' | translate }}</th>
+      <td mat-cell *matCellDef="let s"> {{ s.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="card">
+      <th mat-header-cell *matHeaderCellDef>{{ 'subscriberSummary.card' | translate }}</th>
+      <td mat-cell *matCellDef="let s"> {{ s.cardNumber }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="plan">
+      <th mat-header-cell *matHeaderCellDef>{{ 'subscriberSummary.plan' | translate }}</th>
+<td mat-cell *matCellDef="let s"> {{ getPlanName(s) }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="allowed">
+      <th mat-header-cell *matHeaderCellDef>{{ 'subscriberSummary.allowed' | translate }}</th>
+      <td mat-cell *matCellDef="let s"> {{ s.allowedHours }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="used">
+      <th mat-header-cell *matHeaderCellDef>{{ 'subscriberSummary.used' | translate }}</th>
+      <td mat-cell *matCellDef="let s"> {{ s.usedHours }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="extra">
+      <th mat-header-cell *matHeaderCellDef>{{ 'subscriberSummary.extra' | translate }}</th>
+      <td mat-cell *matCellDef="let s"> {{ s.extraHours }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fee">
+      <th mat-header-cell *matHeaderCellDef>{{ 'subscriberSummary.fee' | translate }}</th>
+      <td mat-cell *matCellDef="let s"> {{ s.hourFee }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pay">
+      <th mat-header-cell *matHeaderCellDef>{{ 'subscriberSummary.toPay' | translate }}</th>
+      <td mat-cell *matCellDef="let s"> {{ s.toPay }} </td>
+    </ng-container>
+
+    <!-- 🔹 Rows -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [ngClass]="{ 'highlight-row': row.toPay > 0 }"
+        (click)="goToIndividualReport(row.id)"   ></tr>
+
+    <!-- 🔸 Totals Row -->
+    <tr class="total-row">
+      <td colspan="3"><strong>{{ 'subscriberSummary.total' | translate }}</strong></td>
+      <td>{{ getTotal('allowedHours') }}</td>
+      <td>{{ getTotal('usedHours') }}</td>
+      <td>{{ getTotal('extraHours') }}</td>
+      <td></td>
+      <td>{{ getTotal('toPay') }}</td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,69 @@
+<!-- 🔍 Filter + View Toggle + Add Button -->
+<div class="status-header">
+  <div class="left-section">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'placeholders.search' | translate }}</mat-label>
+      <input matInput [(ngModel)]="searchText" (input)="loadAll()" />
+    </mat-form-field>
+  </div>
+
+  <div class="right-section">
+    <button mat-icon-button (click)="viewMode = 'grid'" [color]="viewMode === 'grid' ? 'primary' : ''">
+      <mat-icon>grid_view</mat-icon>
+    </button>
+    <button mat-icon-button (click)="viewMode = 'table'" [color]="viewMode === 'table' ? 'primary' : ''">
+      <mat-icon>table_chart</mat-icon>
+    </button>
+    <button mat-flat-button color="primary" (click)="onAdd()">
+      <mat-icon>add</mat-icon>
+      {{ 'buttons.add' | translate }}
+    </button>
+    <button mat-flat-button color="accent" (click)="fileInput.click()">
+  <mat-icon>upload</mat-icon>
+  {{ 'buttons.uploadSubscribers' | translate }}
+</button>
+<input
+  type="file"
+  (change)="onFileSelected($event)"
+  accept=".xls,.xlsx"
+  #fileInput
+  hidden
+/>
+
+  </div>
+</div>
+
+<!-- 🧾 Table View -->
+<div *ngIf="viewMode === 'table'">
+  <app-data-table
+    [dataSource]="subscribers"
+    [columns]="columns"
+    [actions]="true"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)">
+  </app-data-table>
+</div>
+
+<!-- 🧱 Grid View -->
+<div *ngIf="viewMode === 'grid'" class="status-container">
+  <div *ngFor="let s of subscribers" class="status-card">
+    <div class="status-info">
+      <div class="main-title">
+        {{ s.subscriberNameEn }} / {{ s.subscriberNameAr }}
+      </div>
+      <div class="sub-info">
+        <span>{{ 'subscribers.planId' | translate }}: {{ getPlanName(s.planId) }}</span><br />
+        <span>{{ 'subscribers.subscriberType' | translate }}: {{ getSubscriberTypeName(s.subscriberType) }}</span><br />
+        <span>{{ 'subscribers.status' | translate }}: {{ getStatusName(s.status) }}</span>
+      </div>
+    </div>
+    <div class="status-actions">
+      <button mat-icon-button color="primary" (click)="onEdit(s)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="onDelete(s)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

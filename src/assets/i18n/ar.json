@@ -1,0 +1,181 @@
+{
+  "login": {
+    "title": "تسجيل دخول المدير",
+    "subtitle": "تسجيل الدخول إلى حسابك للوصول إلى النظام",
+    "username": "اسم المستخدم *",
+    "password": "كلمة المرور *",
+    "usernameRequired": "اسم المستخدم مطلوب",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "loginBtn": "تسجيل الدخول",
+    "success": "تم تسجيل الدخول بنجاح!",
+  "error": "فشل تسجيل الدخول. حاول مرة أخرى."
+  },
+  "header": {
+    "tooltip": "التبديل إلى الإنجليزية",
+    "announcement": "هذه رسالة متحركة من إدارة المواقف",
+     "hourPrice": "سعر الساعة: ﷼{{price}}"
+  },
+"menu": {
+  "dashboard": "لوحة التحكم",
+  "parking": "مواقف السيارات",
+  "parkingAreas": "المناطق",
+  "subscribers": "المشتركين",
+  "subscriberSettings": "إعدادات المشتركين",
+  "subscriberTypes": "أنواع المشتركين",
+  "reports": "التقارير",
+  "individualReport": "تقرير مشترك فردي",
+  "summaryReport": "تقرير ملخص المشتركين",
+  "settings": "الإعدادات",
+  "owners": "ادارة المشتركين",
+  "generalStatuses": "الحالات العامة",
+  "buildings": "المباني",
+  "flats": "الشقق",
+  "tariffs": "التسعير",
+  "plans": "الخطط",
+  "companyInfo": "معلومات الشركة",
+  "cards": "البطاقات"
+}
+,
+    "tariffs": {
+      "title": "التعريفات",
+      "nameEn": "الاسم (إنجليزي)",
+      "nameAr": "الاسم (عربي)",
+      "price": "السعر/ساعة",
+      "start": "تاريخ البدء",
+      "end": "تاريخ الانتهاء",
+      "status": "الحالة",
+      "confirmDelete": "هل أنت متأكد أنك تريد حذف هذا التعريفة؟"
+    },
+    "common": {
+      "actions": "الخيارات",
+      "delete": "حذف"
+    }
+,"plans": {
+  "title": "إدارة الخطط",
+  "addTitle": "إضافة خطة",
+  "editTitle": "تعديل الخطة",
+  "planNameEn": "اسم الخطة (بالإنجليزية)",
+  "planNameAr": "اسم الخطة (بالعربية)",
+  "hoursIncluded": "الساعات المشمولة",
+  "price": "السعر",
+  "salePrice": "السعر بعد الخصم",
+  "tariffAfterFree": "التعرفة بعد المجانية",
+  "status": "الحالة"
+},
+
+ "flats": {
+  "title": "الشقق",
+  "addTitle": "إضافة شقة",
+  "editTitle": "تعديل شقة",
+  "flatNumber": "رقم الشقة",
+  "buildingId": "المبنى",
+  "subscriberId": "المشترك"
+}
+,
+
+  "generalStatuses": { "title": "الحالات العامة" ,
+    "addTitle": "إضافة حالة عامة",
+    "editTitle": "تعديل حالة عامة",
+    "nameEn": "الاسم (إنجليزي)",
+    "nameAr": "الاسم (عربي)"
+  },
+
+  "subscriberTypes": {
+    "title": "أنواع المشتركين" ,
+    "addTitle": "إضافة نوع مشترك",
+    "editTitle": "تعديل نوع مشترك",
+    "nameEn": "الاسم (إنجليزي)",
+    "nameAr": "الاسم (عربي)",
+      "status": "الحالة"
+
+  },
+
+  "shared": {
+    "nameEn": "الاسم بالإنجليزية",
+    "nameAr": "الاسم بالعربية",
+    "actions": "العمليات",
+    "add": "إضافة",
+    "noData": "لا توجد بيانات",
+    "loading": "جارٍ التحميل..."
+  },
+
+"status": {
+  "addTitle": "إضافة حالة",
+  "editTitle": "تعديل حالة",
+  "nameEn": "الاسم بالإنجليزية",
+  "nameAr": "الاسم بالعربية"
+},
+"buttons": {
+  "cancel": "إلغاء",
+  "add": "إضافة",
+  "save": "حفظ"
+},
+"validation": {
+  "required": "مطلوب"
+},
+"buildings": {
+  "title": "المباني",
+  "addTitle": "إضافة مبنى",
+  "editTitle": "تعديل مبنى",
+  "nameEn": "الاسم بالإنجليزية",
+  "nameAr": "الاسم بالعربية",
+  "locationEn": "الموقع بالإنجليزية",
+  "locationAr": "الموقع بالعربية"
+},
+"subscriberSummary": {
+  "title": "ملخص المشتركين",
+  "name": "الاسم",
+  "card": "رقم البطاقة",
+  "plan": "الخطة",
+  "allowed": "الساعات المسموح بها",
+  "used": "الساعات المستخدمة",
+  "extra": "الساعات الإضافية",
+  "fee": "سعر الساعة الإضافية",
+  "toPay": "المبلغ المستحق",
+  "total": "الإجمالي",
+  "searchPlaceholder": "ابحث بالاسم، البطاقة أو الخطة",
+  "filterByPlan": "تصفية حسب الخطة",
+  "showOnlyUsed": "عرض من استخدموا المواقف",
+  "exportExcel": "تصدير إلى Excel",
+  "print": "طباعة",
+  "filteredCount": "المشتركين المعروضين: {{count}}"
+},
+
+"individualSubscriber": {
+  "search": "ابحث برقم الشقة أو الجوال أو البطاقة أو الاسم",
+  "from": "من",
+  "to": "إلى",
+  "noMatch": "لا يوجد مشترك يطابق البحث",
+  "name": "الاسم",
+  "cardId": "رقم البطاقة",
+  "flatNo": "رقم الشقة",
+  "freeHours": "الساعات المجانية",
+  "extraHourFee": "سعر الساعة الإضافية",
+  "status": "الحالة",
+  "transactions": "سجل الحركات",
+  "excel": "تصدير إلى Excel",
+  "print": "طباعة",
+  "breakdown": "تفاصيل الاستهلاك",
+  "totalHours": "إجمالي الساعات المجانية",
+  "hoursUsed": "الساعات المستخدمة",
+  "hoursRemaining": "الساعات المتبقية",
+  "extraHours": "الساعات الإضافية",
+  "pricePerHour": "السعر لكل ساعة",
+  "totalToPay": "الإجمالي المستحق",
+  "table": {
+    "no": "م",
+    "cardId": "رقم البطاقة",
+    "plateCode": "رمز اللوحة",
+    "in": "دخول",
+    "out": "خروج",
+    "usedHours": "الساعات المستخدمة",
+    "notes": "ملاحظات"
+  },
+   "permanentPeriodNote": "الفترة المجانية (≤ {{minutes}} دقيقة)"
+}
+
+
+
+
+
+}

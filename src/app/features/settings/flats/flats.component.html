@@ -1,0 +1,44 @@
+<h2>{{ 'flats.title' | translate }}</h2>
+
+<div class="header-row">
+  <div class="view-toggle">
+    <button mat-button (click)="viewMode = 'table'" [color]="viewMode === 'table' ? 'primary' : ''">
+      <mat-icon>table_view</mat-icon> Table
+    </button>
+    <button mat-button (click)="viewMode = 'grid'" [color]="viewMode === 'grid' ? 'primary' : ''">
+      <mat-icon>view_module</mat-icon> Grid
+    </button>
+  </div>
+
+  <button mat-flat-button color="primary" (click)="onAdd()" class="add-btn">
+    <mat-icon>add</mat-icon>
+    {{ 'shared.add' | translate }}
+  </button>
+</div>
+
+<app-data-table
+  *ngIf="viewMode === 'table'"
+  [columns]="columns"
+  [dataSource]="flats"
+  [actions]="true"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event.id)">
+</app-data-table>
+
+<!-- Grid View -->
+<div *ngIf="viewMode === 'grid'" class="status-grid">
+  <div class="status-card" *ngFor="let flat of flats">
+    <div class="status-info">
+      <div class="status-id">#{{ flat.id }}</div>
+      <div class="status-names">
+        <div><strong>{{ 'flats.flatNumber' | translate }}:</strong> {{ flat.flatNumber }}</div>
+        <div><strong>{{ 'flats.buildingId' | translate }}:</strong> {{ flat.buildingId }}</div>
+        <div><strong>{{ 'flats.subscriberId' | translate }}:</strong> {{ flat.subscriberId }}</div>
+      </div>
+    </div>
+    <div class="status-actions">
+      <button class="edit-btn" (click)="onEdit(flat)">✏️</button>
+      <button class="delete-btn" (click)="onDelete(flat.id)">🗑️</button>
+    </div>
+  </div>
+</div>
